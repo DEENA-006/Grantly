@@ -1,11 +1,26 @@
-# Root Git Ignore
+# Dependencies
 node_modules/
+**/node_modules/
+
+# Next.js build output
 .next/
+**/.next/
+out/
+build/
+dist/
+
+# Logs & temp
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
 .env
 .env.*
 !.env.example
-.DS_Store
-dist/
-build/
+*.pem
 
+# OS
+.DS_Store
+Thumbs.db
