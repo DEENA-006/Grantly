@@ -75,7 +75,6 @@ export function TrackerPage() {
     } catch {
       // Ignore
     }
-    setIsLoaded(true);
   }, []);
 
   const persistBoard = (items: BoardItem[]) => {
