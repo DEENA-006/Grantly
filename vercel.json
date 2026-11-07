@@ -1,6 +1,0 @@
-{
-  "buildCommand": "npm --prefix grantly run build",
-  "installCommand": "npm --prefix grantly install",
-  "outputDirectory": "grantly/.next",
-  "framework": "nextjs"
-}

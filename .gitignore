@@ -9,6 +9,10 @@ out/
 build/
 dist/
 
+# TypeScript & Next.js generated
+next-env.d.ts
+*.tsbuildinfo
+
 # Logs & temp
 *.log
 npm-debug.log*

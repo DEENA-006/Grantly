@@ -90,3 +90,4 @@ Grantly includes root [`vercel.json`](./vercel.json) and workspace scripts confi
 ---
 
 *Built with passion for The Outpost 6-Hour Hackathon.*
+
