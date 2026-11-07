@@ -4,8 +4,23 @@ const VALID_PINS = ["9020", "2026", "1234", "0000"];
 
 export async function POST(request: Request) {
   try {
-    const { pin } = await request.json();
-    if (!VALID_PINS.includes(pin)) {
+    let pin = "";
+    const contentType = request.headers.get("content-type") || "";
+
+    if (contentType.includes("application/json")) {
+      const data = await request.json().catch(() => ({}));
+      pin = String(data?.pin || "").trim();
+    } else {
+      const text = await request.text().catch(() => "");
+      try {
+        const data = JSON.parse(text);
+        pin = String(data?.pin || "").trim();
+      } catch {
+        pin = text.trim();
+      }
+    }
+
+    if (!pin || !VALID_PINS.includes(pin)) {
       return NextResponse.json(
         { success: false, message: "Invalid clearance PIN" },
         { status: 401 }
