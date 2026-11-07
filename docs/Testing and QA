@@ -1,0 +1,7 @@
+Pre-Submission Checklist
+
+Mobile First: Does the split-screen dashboard convert cleanly into a tabbed or stacked view on mobile?
+
+Debouncing: Is the search input properly debounced to prevent rendering lag?
+
+Contrast: Does the accent color pass WCAG accessibility contrast checks against the calm background?

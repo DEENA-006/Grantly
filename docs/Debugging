@@ -1,0 +1,7 @@
+Common Vibe Coding Fixes
+
+GSAP Hydration Errors: Ensure all GSAP ScrollTrigger animations are wrapped in useLayoutEffect (or useEffect for SSR).
+
+Lenis Window Error: Import Lenis dynamically or check typeof window !== "undefined" to prevent Next.js server build crashes.
+
+Three.js Lag: Keep the polygon count of the background mesh low and wrap the canvas in a <Suspense> boundary.

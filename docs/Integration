@@ -1,0 +1,5 @@
+Third-Party Libraries
+
+Lucide React: Used exclusively for minimalist, consistent iconography.
+
+Zustand (Optional): If React Context becomes too verbose for managing the Kanban board state, snap in Zustand for a lightweight global store.

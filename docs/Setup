@@ -1,0 +1,5 @@
+Environment & Dependencies:
+
+npx create-next-app@latest grantly
+npm install gsap @studio-freight/lenis framer-motion @react-three/fiber @react-three/drei
+npm install lucide-react clsx tailwind-merge

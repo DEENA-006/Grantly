@@ -1,0 +1,5 @@
+Model Context Protocol Guidelines
+
+No external MCP database tools required for this frontend-only scope.
+
+Restrict Antigravity's context strictly to the local workspace to prevent the AI from hallucinating complex backend server actions that consume hackathon time.

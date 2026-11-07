@@ -1,0 +1,9 @@
+Implementation Sequence:
+
+Hero/Landing: 3D animated mesh background reacting to mouse movement, overlaying massive typography.
+
+Split Dashboard: Discovery feed (left column) + Kanban tracker (right column).
+
+Filtering Engine: Client-side filtering of the JSON data with a ~300ms debounce on the search input to simulate optimization.
+
+Drag-and-Drop: Wire up Framer Motion Reorder components for the Kanban board.

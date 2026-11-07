@@ -1,0 +1,12 @@
+{
+  "name": "grantly-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix grantly run dev",
+    "build": "npm --prefix grantly run build",
+    "start": "npm --prefix grantly run start",
+    "lint": "npm --prefix grantly run lint"
+  }
+}
+
