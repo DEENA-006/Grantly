@@ -83,6 +83,7 @@ export function AppSidebar({
       localStorage.removeItem("grantly_authenticated");
       sessionStorage.removeItem("grantly_authenticated");
       document.cookie = "grantly_authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
     } catch {
       // Ignore
     }

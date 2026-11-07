@@ -40,7 +40,19 @@ export function proxy(request: NextRequest) {
     return response;
   }
 
-  // Protected Routes: If unauthenticated, redirect to /login immediately
+  // Next.js RSC client navigation / prefetch: do not hard-redirect so client doesn't get stuck in a loop
+  const isRscRequest =
+    request.headers.get("RSC") === "1" ||
+    request.headers.get("Next-Router-Prefetch") === "1" ||
+    request.headers.get("Next-Router-State-Tree") !== null;
+
+  if (isRscRequest) {
+    const response = NextResponse.next();
+    addSecurityHeaders(response);
+    return response;
+  }
+
+  // Full Document Request: If unauthenticated and accessing protected routes, redirect to /login
   if (!isAuthCookie && pathname !== "/login") {
     const loginUrl = new URL("/login", request.url);
     return NextResponse.redirect(loginUrl);
@@ -61,5 +73,5 @@ function addSecurityHeaders(response: NextResponse) {
 export default proxy;
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

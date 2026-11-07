@@ -20,6 +20,7 @@ export default function LoginPage() {
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutTimer, setLockoutTimer] = useState(0);
   const [isAlreadyAuthenticated, setIsAlreadyAuthenticated] = useState(false);
+  const [returnTo, setReturnTo] = useState("/");
 
   const inputRefs = [
     useRef<HTMLInputElement>(null),
@@ -32,10 +33,15 @@ export default function LoginPage() {
   useEffect(() => {
     try {
       const searchParams = new URLSearchParams(window.location.search);
+      const fromParam = searchParams.get("from");
+      const targetDest = fromParam || "/";
+      setReturnTo(targetDest);
+
       if (searchParams.get("logout") === "true") {
         localStorage.removeItem("grantly_authenticated");
         sessionStorage.removeItem("grantly_authenticated");
         document.cookie = "grantly_authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
         setIsAlreadyAuthenticated(false);
       } else {
         const isAuth =
@@ -44,6 +50,10 @@ export default function LoginPage() {
           document.cookie.includes("grantly_authenticated=true");
         if (isAuth) {
           setIsAlreadyAuthenticated(true);
+          // Auto-redirect if already cleared so student is never stuck
+          setTimeout(() => {
+            router.push(targetDest);
+          }, 350);
         }
       }
     } catch {
@@ -137,7 +147,7 @@ export default function LoginPage() {
 
     setStatus("verifying");
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (VALID_PINS.includes(pin)) {
         // Correct PIN
         setStatus("success");
@@ -147,15 +157,22 @@ export default function LoginPage() {
         try {
           sessionStorage.setItem("grantly_authenticated", "true");
           localStorage.setItem("grantly_authenticated", "true");
-          document.cookie = "grantly_authenticated=true; path=/; max-age=86400; SameSite=Lax";
+          document.cookie = `grantly_authenticated=true; path=/; max-age=2592000; SameSite=Lax${
+            typeof window !== "undefined" && window.location.protocol === "https:" ? "; Secure" : ""
+          }`;
+          await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pin }),
+          }).catch(() => {});
         } catch {
           // Ignore
         }
 
         setTimeout(() => {
-          router.push("/");
+          router.push(returnTo);
           router.refresh();
-        }, 850);
+        }, 650);
       } else {
         // Incorrect PIN -> Trigger horizontal shake & rate limit counter
         setStatus("error");
